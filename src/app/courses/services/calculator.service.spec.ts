@@ -1,32 +1,31 @@
-
-// In Jasmine tests are known as specifications  or specs and they are grouped in test suites (like describe function)
+import { CalculatorService } from "./calculator.service";
+import { LoggerService } from "./logger.service";
 
 describe("CalculatorService", () => {
 
   it("should add two numbers", () => {
 
-    pending();
-  });
+    // STEPS
+    //-------
+    // 1 --> setup phase where we are preparing the components or services that we want to test
+    const calculator = new CalculatorService(new LoggerService());
 
-  it("should add subtract two numbers", () => {
-    pending();
+     // 2 --> execution phase where we are going to trigger the operation that we want to test
+    const result = calculator.add(2, 2);
+
+    // 3--> write a series of test assetions that are either going to fail or they are going to be succesfull marking
+    // the test accordingly
+    expect(result).toBe(4);
+  });
+      //Jasmine Functions:
+    //expect: Makes an assertion about the expected outcome.
+
+  it("should subtract two numbers", () => {
+
+    const calculator = new CalculatorService(new LoggerService());
+
+    const result = calculator.subtract(2, 2);
+
+    expect(result).toBe(0, 'unexpected subtraction result');
   });
 });
-
-// ng test
-//---------
-/*  
-- To run these tests, you would typically use a test runner like Karma or simply 
-
-- Specification (Spec): A single test case that checks a specific behavior.
-- Test Suite: A collection of related specs.
--Jasmine Functions:
-  describe: Defines a test suite.
-  it: Defines a specification.
-
-- pending() --> simulate pending state - test will not run 
-    - fail() --> simulate fail state
-    - by default karma test will runner run in hot reload - means when you save it will get the change.
-      ng test --no-watch --> to run the specifications without hot reload on save
-      angular cli will exit in the end and it will display just the report if we use --no-watch flag
- */
