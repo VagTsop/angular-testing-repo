@@ -1,0 +1,84 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+**/node_modules
+**/target
+**/build
+**/dist
+**/out-tsc
+**/tmp
+**/test/reports
+**/src/coverage
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+yarn-error.log
+yarn.lock
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# Angular specific
+.angular
+
+# System Files
+.DS_Store
+Thumbs.db
+
+/assets/env-json-config.json
+/assets/openid-login-config.json
+
+cypress/results/*
+cypress/reports/*
+cypress/screenshots/*
+cypress/videos/*
+
+### SonarQube ###
+# SonarQube ignore files.
+#
+# https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
+# Sonar Scanner working directories
+.sonar/
+.sonarqube/
+.scannerwork/
+
+# http://www.sonarlint.org/commandline/
+# SonarLint working directories, configuration files (including credentials)
+.sonarlint/
+
+reports
+
+.npmrc
+
+mock/data/*
+
+# nx
+.nx/
+
+sonar-scanner.txt
+
+#allure
+./target/
