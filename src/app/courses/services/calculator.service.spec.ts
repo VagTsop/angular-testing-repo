@@ -2,6 +2,9 @@ import { CalculatorService } from "./calculator.service";
 import { TestBed } from "@angular/core/testing";
 import { LoggerService } from "./logger.service";
 
+// xdescribe() if you want to disable the complete test suite of the calculator service
+// fdescribe() if we want to focus on only one particular test suite, to execute the calculator service 
+// test suite containing  these two tests - when we have multiple test suites
 describe("CalculatorService", () => {
 
   let calculator: CalculatorService, loggerSpy: any;
@@ -12,7 +15,6 @@ describe("CalculatorService", () => {
    
     loggerSpy = jasmine.createSpyObj("LoggerService", ["log"]);
 
-    // used to configure our tests specks like register services for dependency injection etc
     TestBed.configureTestingModule({
       providers: [
         CalculatorService,
@@ -21,13 +23,10 @@ describe("CalculatorService", () => {
     });
 
     calculator = TestBed.inject(CalculatorService); 
-    /* with TestBed our tests also based on dependency injection just like the running application.
-     
-    what is the advantage of using TestBed when compared to calling the constructor of the calculator
-    service directly?
-    */
   });
 
+ // xit() disable for example only the subtraction test
+ // fit() focus on only one test and skip the others
   it("should add two numbers", () => {
 
     console.log("add test");
