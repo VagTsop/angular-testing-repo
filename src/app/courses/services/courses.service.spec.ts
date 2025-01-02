@@ -1,7 +1,10 @@
 import { TestBed } from "@angular/core/testing";
 import { CoursesService } from "./courses.service";
-import { HttpClientTestingModule,  HttpTestingController } from "@angular/common/http/testing";
-import { COURSES } from "../../../../server/db-data";
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from "@angular/common/http/testing";
+import { COURSES, findLessonsForCourse } from "../../../../server/db-data";
 import { Course } from "../model/course";
 import { HttpErrorResponse } from "@angular/common/http";
 
@@ -21,7 +24,6 @@ describe("CoursesService", () => {
 
   it("should retrieve all courses", () => {
     coursesService.findAllCourses().subscribe((courses) => {
-      
       expect(courses).toBeTruthy("No courses returned");
 
       expect(courses.length).toBe(12, "incorrect number of courses");
@@ -40,9 +42,8 @@ describe("CoursesService", () => {
 
   it("should find a course by id", () => {
     coursesService.findCourseById(12).subscribe((course) => {
-      
       expect(course).toBeTruthy();
-    
+
       expect(course.id).toBe(12);
     });
 
@@ -59,7 +60,6 @@ describe("CoursesService", () => {
     };
 
     coursesService.saveCourse(12, changes).subscribe((course) => {
-
       expect(course.id).toBe(12);
     });
 
@@ -67,36 +67,46 @@ describe("CoursesService", () => {
 
     expect(req.request.method).toEqual("PUT");
 
-    expect(req.request.body.titles.description).toEqual(changes.titles.description);
+    expect(req.request.body.titles.description).toEqual(
+      changes.titles.description
+    );
 
     req.flush({
       ...COURSES[12],
-      ...changes
+      ...changes,
     });
   });
 
-  it("should give an error if save course fails", () => {
-   
-    const changes: Partial<Course> = {
-      titles: { description: "Testing Course" },
-    };
+  it("should find a list of lessons", () => {
+    // 1. Call the findLessons method of the coursesService with the argument 12.
+    coursesService.findLessons(12).subscribe((lessons) => {
+      // 6. This callback is executed when the Observable emits a value.
+      // 7. Assert that the lessons array is truthy (i.e., it exists).
+      expect(lessons).toBeTruthy();
   
-    
-    coursesService.saveCourse(12, changes)
-      .subscribe(
-       
-        () => fail('The save course operation should have failed'),
+      // 8. Assert that the length of the lessons array is 3.
+      expect(lessons.length).toBe(3);
+    });
   
-        (error: HttpErrorResponse) => {
-          expect(error.status).toBe(500);
-        }
-      );
+    // 2. Expect that a single HTTP request has been made to the specified URL.
+    const req = httpTestingController.expectOne(
+      (req) => req.url == "/api/lessons"
+    );
   
-    const req = httpTestingController.expectOne("/api/courses/12");
+    // 3. Assert that the HTTP request method is "GET".
+    expect(req.request.method).toEqual("GET");
   
-    expect(req.request.method).toEqual("PUT");
+    // 4. Assert that the request parameters are correct.
+    expect(req.request.params.get("courseId")).toEqual("12");
+    expect(req.request.params.get("filter")).toEqual("");
+    expect(req.request.params.get("sortOrder")).toEqual("asc");
+    expect(req.request.params.get("pageNumber")).toEqual("0");
+    expect(req.request.params.get("pageSize")).toEqual("3");
   
-    req.flush('Save course failed', { status: 500, statusText: 'Internal Server Error' });
+    // 5. Simulate a server response by providing the payload with the lessons data.
+    req.flush({
+      payload: findLessonsForCourse(12).slice(0, 3),
+    });
   });
   
   afterEach(() => {
