@@ -75,39 +75,31 @@ describe("CoursesService", () => {
     });
   });
 
-
   it("should give an error if save course fails", () => {
-    // 1. Define the changes to be made to the course.
+   
     const changes: Partial<Course> = {
       titles: { description: "Testing Course" },
     };
   
-    // 2. Call the saveCourse method of the coursesService with the course id and changes.
+    
     coursesService.saveCourse(12, changes)
       .subscribe(
-        // 6. This callback is executed if the Observable emits a value (success case).
-        // 7. If the save operation succeeds, this line will fail the test because we expect it to fail.
+       
         () => fail('The save course operation should have failed'),
   
-        // 8. This callback is executed if the Observable emits an error.
         (error: HttpErrorResponse) => {
-          // 9. Assert that the error status is 500.
           expect(error.status).toBe(500);
         }
       );
   
-    // 3. Expect that a single HTTP request has been made to the specified URL.
     const req = httpTestingController.expectOne("/api/courses/12");
   
-    // 4. Assert that the HTTP request method is "PUT".
     expect(req.request.method).toEqual("PUT");
   
-    // 5. Simulate a server error response with status 500 and status text 'Internal Server Error'.
     req.flush('Save course failed', { status: 500, statusText: 'Internal Server Error' });
   });
   
   afterEach(() => {
-    // 9. Verify that there are no outstanding HTTP requests.
     httpTestingController.verify();
   });
 });
