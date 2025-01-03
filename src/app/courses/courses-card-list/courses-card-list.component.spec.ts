@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { CoursesModule } from "../courses.module";
 import { CoursesCardListComponent } from "./courses-card-list.component";
+import { setupCourses } from "../common/setup-test-data";
+import { DebugElement } from "@angular/core";
+import { By } from "@angular/platform-browser";
 
 // Presentational Component - display course list
 // -----------------------------------------------
@@ -15,6 +18,8 @@ describe("CoursesCardListComponent", () => {
 
   let fixture: ComponentFixture<CoursesCardListComponent>;
 
+  let el: DebugElement;
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [CoursesModule],
@@ -23,6 +28,7 @@ describe("CoursesCardListComponent", () => {
       .then(() => {
         fixture = TestBed.createComponent(CoursesCardListComponent);
         component = fixture.componentInstance;
+        el = fixture.debugElement;
       });
   })); //
 
@@ -31,7 +37,12 @@ describe("CoursesCardListComponent", () => {
   });
 
   it("should display the course list", () => {
-    pending();
+    component.courses = setupCourses();
+
+    const cards = el.queryAll(By.css(".course-card"));
+
+    expect(cards).toBeTruthy("Could not find cards");
+    expect(cards.length).toBe(12, "Unexpected");
   });
 
   it("should display the first course", () => {
