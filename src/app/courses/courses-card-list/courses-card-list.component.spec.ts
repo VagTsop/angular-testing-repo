@@ -5,14 +5,6 @@ import { setupCourses } from "../common/setup-test-data";
 import { DebugElement } from "@angular/core";
 import { By } from "@angular/platform-browser";
 
-// Presentational Component - display course list
-// -----------------------------------------------
-// simple take some input data and display it on the screen
-// many times we avoid to test presentationalk components due to the simplicity of component and we go immediately to
-// container components. This is Valid approach.
-// But we might have to test them due to test coverage
-// requirements in our project that is not our control
-
 describe("CoursesCardListComponent", () => {
   let component: CoursesCardListComponent;
 
@@ -30,7 +22,7 @@ describe("CoursesCardListComponent", () => {
         component = fixture.componentInstance;
         el = fixture.debugElement;
       });
-  })); //
+  })); 
 
   it("should create the component", () => {
     expect(component).toBeTruthy();
