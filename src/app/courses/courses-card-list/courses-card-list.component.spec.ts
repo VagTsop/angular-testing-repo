@@ -22,7 +22,7 @@ describe("CoursesCardListComponent", () => {
         component = fixture.componentInstance;
         el = fixture.debugElement;
       });
-  })); 
+  }));
 
   it("should create the component", () => {
     expect(component).toBeTruthy();
@@ -31,10 +31,14 @@ describe("CoursesCardListComponent", () => {
   it("should display the course list", () => {
     component.courses = setupCourses();
 
+    fixture.detectChanges();
+
+    console.log(el.nativeElement.outerHTML);
+
     const cards = el.queryAll(By.css(".course-card"));
 
     expect(cards).toBeTruthy("Could not find cards");
-    expect(cards.length).toBe(12, "Unexpected");
+    expect(cards.length).toBe(12, "Unexpected number of courses");
   });
 
   it("should display the first course", () => {
