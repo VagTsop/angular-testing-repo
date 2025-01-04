@@ -5,7 +5,7 @@ import { setupCourses } from "../common/setup-test-data";
 import { DebugElement } from "@angular/core";
 import { By } from "@angular/platform-browser";
 
-// CoursesCardListComponent --> presentation Component
+// CoursesCardListComponent --> presentational Component
 describe("CoursesCardListComponent", () => {
   let component: CoursesCardListComponent;
   let fixture: ComponentFixture<CoursesCardListComponent>;
