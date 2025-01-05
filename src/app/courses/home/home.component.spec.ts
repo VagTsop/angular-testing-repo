@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, flush,TestBed,waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from "@angular/core/testing";
 import { CoursesModule } from "../courses.module";
 import { DebugElement } from "@angular/core";
 import { HomeComponent } from "./home.component";
